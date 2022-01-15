@@ -265,6 +265,7 @@ modify_inbound_port() {
     if [[ "on" == "$old_config_status" ]]; then
         port="$(info_extraction '\"port\"')"
     fi
+    PORT=$((RANDOM + 10000))
     sed -i "/\"port\"/c  \    \"port\":${port}," ${v2ray_conf}
     judge "V2ray inbound_port 修改"
 }
