@@ -29,7 +29,7 @@ Error="${Red}[错误]${Font}"
 # 版本
 shell_version="1.0.0"
 shell_mode="None"
-github_branch="master"
+github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
 v2ray_conf_dir="/etc/v2ray"
 nginx_conf_dir="/etc/nginx/conf/conf.d"
@@ -265,12 +265,6 @@ modify_inbound_port() {
     if [[ "on" == "$old_config_status" ]]; then
         port="$(info_extraction '\"port\"')"
     fi
-    if [[ "$shell_mode" != "h2" ]]; then
-        PORT=$((RANDOM + 10000))
-        sed -i "/\"port\"/c  \    \"port\":${PORT}," ${v2ray_conf}
-    else
-        sed -i "/\"port\"/c  \    \"port\":${port}," ${v2ray_conf}
-    fi
     judge "V2ray inbound_port 修改"
 }
 modify_UUID() {
@@ -496,20 +490,13 @@ acme() {
 }
 v2ray_conf_add_tls() {
     cd /etc/v2ray || exit
-    wget --no-check-certificate https://raw.githubusercontent.com/tooiiby/V2Ray_ws-tls/${github_branch}/tls/config.json -O config.json
+    wget --no-check-certificate https://raw.githubusercontent.com/tooiiby/V2Ray_ws-tls/${github_branch}/config.json -O config.json
     modify_path
     modify_alterid
     modify_inbound_port
     modify_UUID
 }
-v2ray_conf_add_h2() {
-    cd /etc/v2ray || exit
-    wget --no-check-certificate https://raw.githubusercontent.com/tooiiby/V2Ray_ws-tls/${github_branch}/http2/config.json -O config.json
-    modify_path
-    modify_alterid
-    modify_inbound_port
-    modify_UUID
-}
+
 old_config_exist_check() {
     if [[ -f $v2ray_qr_config_file ]]; then
         echo -e "${OK} ${GreenBG} 检测到旧配置文件，是否读取旧文件配置 [Y/N]? ${Font}"
@@ -622,7 +609,7 @@ nginx_process_disabled() {
 #    judge "rc.local 配置"
 #}
 acme_cron_update() {
-    wget -N -P /usr/bin --no-check-certificate "https://raw.githubusercontent.com/wulabing/V2Ray_ws-tls_bash_onekey/dev/ssl_update.sh"
+    wget -N -P /usr/bin --no-check-certificate "https://raw.githubusercontent.com/tooiiby/V2Ray_ws-tls/main/ssl_update.sh"
     if [[ $(crontab -l | grep -c "ssl_update.sh") -lt 1 ]]; then
       if [[ "${ID}" == "centos" ]]; then
           #        sed -i "/acme.sh/c 0 3 * * 0 \"/root/.acme.sh\"/acme.sh --cron --home \"/root/.acme.sh\" \
@@ -641,7 +628,7 @@ vless_qr_config_tls_ws() {
     cat >$v2ray_qr_config_file <<-EOF
 {
   "v": "2",
-  "ps": "tooiiby_${domain}",
+  "ps": "hello_${domain}",
   "add": "${domain}",
   "port": "${port}",
   "id": "${UUID}",
@@ -655,58 +642,6 @@ vless_qr_config_tls_ws() {
 EOF
 }
 
-vless_qr_config_h2() {
-    cat >$v2ray_qr_config_file <<-EOF
-{
-  "v": "2",
-  "ps": "tooiiby_${domain}",
-  "add": "${domain}",
-  "port": "${port}",
-  "id": "${UUID}",
-  "aid": "${alterID}",
-  "net": "h2",
-  "type": "none",
-  "path": "${camouflage}",
-  "tls": "tls"
-}
-EOF
-}
-
-vmess_qr_link_image() {
-    vmess_link="vmess://$(base64 -w 0 $v2ray_qr_config_file)"
-    {
-        echo -e "$Red 二维码: $Font"
-        echo -n "${vmess_link}" | qrencode -o - -t utf8
-        echo -e "${Red} URL导入链接:${vmess_link} ${Font}"
-    } >>"${v2ray_info_file}"
-}
-
-vmess_quan_link_image() {
-    echo "$(info_extraction '\"ps\"') = vmess, $(info_extraction '\"add\"'), \
-    $(info_extraction '\"port\"'), chacha20-ietf-poly1305, "\"$(info_extraction '\"id\"')\"", over-tls=true, \
-    certificate=1, obfs=ws, obfs-path="\"$(info_extraction '\"path\"')\"", " > /tmp/vmess_quan.tmp
-    vmess_link="vmess://$(base64 -w 0 /tmp/vmess_quan.tmp)"
-    {
-        echo -e "$Red 二维码: $Font"
-        echo -n "${vmess_link}" | qrencode -o - -t utf8
-        echo -e "${Red} URL导入链接:${vmess_link} ${Font}"
-    } >>"${v2ray_info_file}"
-}
-
-vmess_link_image_choice() {
-        echo "请选择生成的链接种类"
-        echo "1: V2RayNG/V2RayN"
-        echo "2: quantumult"
-        read -rp "请输入：" link_version
-        [[ -z ${link_version} ]] && link_version=1
-        if [[ $link_version == 1 ]]; then
-            vmess_qr_link_image
-        elif [[ $link_version == 2 ]]; then
-            vmess_quan_link_image
-        else
-            vmess_qr_link_image
-        fi
-}
 info_extraction() {
     grep "$1" $v2ray_qr_config_file | awk -F '"' '{print $4}'
 }
