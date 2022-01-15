@@ -265,6 +265,7 @@ modify_inbound_port() {
     if [[ "on" == "$old_config_status" ]]; then
         port="$(info_extraction '\"port\"')"
     fi
+    sed -i "/\"port\"/c  \    \"port\":${port}," ${v2ray_conf}
     judge "V2ray inbound_port 修改"
 }
 modify_UUID() {
@@ -568,10 +569,8 @@ EOF
 start_process_systemd() {
     systemctl daemon-reload
     chown -R root.root /var/log/v2ray/
-    if [[ "$shell_mode" != "h2" ]]; then
-        systemctl restart nginx
-        judge "Nginx 启动"
-    fi
+    systemctl restart nginx
+    judge "Nginx 启动"
     systemctl restart v2ray
     judge "V2ray 启动"
 }
@@ -579,11 +578,8 @@ start_process_systemd() {
 enable_process_systemd() {
     systemctl enable v2ray
     judge "设置 v2ray 开机自启"
-    if [[ "$shell_mode" != "h2" ]]; then
-        systemctl enable nginx
-        judge "设置 Nginx 开机自启"
-    fi
-
+    systemctl enable nginx
+    judge "设置 Nginx 开机自启"
 }
 
 stop_process_systemd() {
@@ -797,8 +793,6 @@ judge_mode() {
     if [ -f $v2ray_bin_dir ] || [ -f $v2ray_bin_dir_old/v2ray ]; then
         if grep -q "ws" $v2ray_qr_config_file; then
             shell_mode="ws"
-        elif grep -q "h2" $v2ray_qr_config_file; then
-            shell_mode="h2"
         fi
     fi
 }
@@ -937,8 +931,6 @@ menu() {
         read -rp "请输入连接端口:" port
         if grep -q "ws" $v2ray_qr_config_file; then
             modify_nginx_port
-        elif grep -q "h2" $v2ray_qr_config_file; then
-            modify_inbound_port
         fi
         start_process_systemd
         ;;
