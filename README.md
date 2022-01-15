@@ -9,7 +9,9 @@ V2Ray 基于 Nginx 的 vmess+ws+tls 一键安装脚本
 准备工作
 准备一个域名，并将A记录添加好。
 V2ray官方说明，了解 TLS WebSocket 及 V2ray 相关信息
+
 安装好 wget
+
 安装/更新方式
 Vmess+websocket+TLS+Nginx+Website
 
@@ -30,8 +32,7 @@ V2Ray是一个优秀的开源网络代理工具，可以帮助你畅爽体验互
 本脚本为一键完全配置脚本，在所有流程正常运行完毕后，直接按照输出结果设置客户端即可使用
 请注意：我们依然强烈建议你全方面的了解整个程序的工作流程及原理
 建议单服务器仅搭建单个代理
-本脚本默认安装最新版本的V2ray core
-V2ray core 目前最新版本为 4.22.1（同时请注意客户端 core 的同步更新，需要保证客户端内核版本 >= 服务端内核版本）
+本脚本默认安装最新版本的V2ray core（同时请注意客户端 core 的同步更新，需要保证客户端内核版本 >= 服务端内核版本）
 建议使用默认的443端口作为连接端口
 伪装内容可自行替换。
 注意事项
@@ -51,7 +52,7 @@ Centos 系统用户请预先在防火墙中放行程序相关端口（默认：8
 停止 Nginx：systemctl stop nginx
 
 相关目录
-Web 目录：/home/wwwroot/3DCEList
+Web 目录：/home/wwwroot/catch-the-cat
 
 V2ray 服务端配置：/etc/v2ray/config.json
 
