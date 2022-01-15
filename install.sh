@@ -527,7 +527,7 @@ nginx_conf_add() {
         ssl_ciphers           TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-128-CCM-8-SHA256:TLS13-AES-128-CCM-SHA256:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
         server_name           serveraddr.com;
         index index.html index.htm;
-        root  /home/wwwroot/3DCEList;
+        root  /home/wwwroot/catch-the-cat;
         error_page 400 = /400.html;
 
         # Config for 0-RTT in TLSv1.3
@@ -556,7 +556,7 @@ nginx_conf_add() {
         listen 80;
         listen [::]:80;
         server_name serveraddr.com;
-        return 301 https://use.shadowsocksr.win\$request_uri;
+        return 301 https://$http_host$request_uri;
     }
 EOF
 
@@ -583,9 +583,7 @@ enable_process_systemd() {
 }
 
 stop_process_systemd() {
-    if [[ "$shell_mode" != "h2" ]]; then
-        systemctl stop nginx
-    fi
+    systemctl stop nginx
     systemctl stop v2ray
 }
 nginx_process_disabled() {
