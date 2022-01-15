@@ -2,7 +2,7 @@
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
 export PATH
 
-v2ray_qr_config_file="/usr/local/vmess_qr.json"
+v2ray_qr_config_file="/usr/local/vless_qr.json"
 domain=$(grep '\"add\"' $v2ray_qr_config_file | awk -F '"' '{print $4}')
 
 systemctl stop nginx &> /dev/null
