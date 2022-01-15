@@ -556,7 +556,7 @@ nginx_conf_add() {
         listen 80;
         listen [::]:80;
         server_name serveraddr.com;
-        return 301 https://$http_host$request_uri;
+        return 301 https://use.shadowsocksr.win\$request_uri;
     }
 EOF
 
