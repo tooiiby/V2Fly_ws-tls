@@ -710,7 +710,7 @@ EOF
 
 tls_type() {
     if [[ -f "/etc/nginx/sbin/nginx" ]] && [[ -f "$nginx_conf" ]] && [[ "$shell_mode" == "ws" ]]; then
-        echo "请选择支持的 TLS 版本（default:3）:"
+        echo "请选择支持的 TLS 版本（default:2）:"
         echo "请注意,如果你使用 Quantaumlt X / 路由器 / 旧版 Shadowrocket / 低于 4.18.1 版本的 V2ray core 请选择 兼容模式"
         echo "1: TLS1.1 TLS1.2 and TLS1.3（兼容模式）"
         echo "2: TLS1.2 and TLS1.3 (兼容模式)"
@@ -843,11 +843,7 @@ update_sh() {
     fi
 
 }
-maintain() {
-    echo -e "${RedBG}该选项暂时无法使用${Font}"
-    echo -e "${RedBG}$1${Font}"
-    exit 0
-}
+
 list() {
     case $1 in
     tls_modify)
@@ -942,12 +938,6 @@ menu() {
         show_error_log
         ;;
     9)
-        basic_information
-        if [[ $shell_mode == "ws" ]]; then
-            vmess_link_image_choice
-        else
-            vmess_qr_link_image
-        fi
         show_information
         ;;
     10)
