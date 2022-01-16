@@ -482,7 +482,7 @@ acme() {
     fi
 }
 v2ray_conf_add_tls() {
-    cd /etc/v2ray || exit
+    cd /usr/local/etc/v2ray || exit
     wget --no-check-certificate https://raw.githubusercontent.com/tooiiby/V2Ray_ws-tls/${github_branch}/config.json -O config.json
     modify_path
     modify_alterid
