@@ -31,7 +31,7 @@ shell_version="1.0.0"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
-v2ray_conf_dir="/etc/v2ray"
+v2ray_conf_dir="/usr/local/etc/v2ray"
 nginx_conf_dir="/etc/nginx/conf/conf.d"
 v2ray_conf="${v2ray_conf_dir}/config.json"
 nginx_conf="${nginx_conf_dir}/v2ray.conf"
@@ -308,8 +308,8 @@ v2ray_install() {
     if [[ -d /root/v2ray ]]; then
         rm -rf /root/v2ray
     fi
-    if [[ -d /etc/v2ray ]]; then
-        rm -rf /etc/v2ray
+    if [[ -d /usr/local/etc/v2ray ]]; then
+        rm -rf /usr/local/etc/v2ray
     fi
     mkdir -p /root/v2ray
     cd /root/v2ray || exit
@@ -568,10 +568,11 @@ EOF
 }
 
 start_process_systemd() {
-    systemctl daemon-reload
-    chown -R root.root /var/log/v2ray/
     systemctl restart nginx
     judge "Nginx 启动"
+    chown -R root.root /var/log/v2ray/
+    systemctl daemon-reload
+    sed -i "s/User=nobody/User=root/;" /etc/systemd/system/v2ray.service
     systemctl restart v2ray
     judge "V2ray 启动"
 }
@@ -591,28 +592,12 @@ nginx_process_disabled() {
     [ -f $nginx_systemd_file ] && systemctl stop nginx && systemctl disable nginx
 }
 
-#debian 系 9 10 适配
-#rc_local_initialization(){
-#    if [[ -f /etc/rc.local ]];then
-#        chmod +x /etc/rc.local
-#    else
-#        touch /etc/rc.local && chmod +x /etc/rc.local
-#        echo "#!/bin/bash" >> /etc/rc.local
-#        systemctl start rc-local
-#    fi
-#
-#    judge "rc.local 配置"
-#}
 acme_cron_update() {
     wget -N -P /usr/bin --no-check-certificate "https://raw.githubusercontent.com/tooiiby/V2Ray_ws-tls/main/ssl_update.sh"
     if [[ $(crontab -l | grep -c "ssl_update.sh") -lt 1 ]]; then
       if [[ "${ID}" == "centos" ]]; then
-          #        sed -i "/acme.sh/c 0 3 * * 0 \"/root/.acme.sh\"/acme.sh --cron --home \"/root/.acme.sh\" \
-          #        &> /dev/null" /var/spool/cron/root
           sed -i "/acme.sh/c 0 3 * * 0 bash ${ssl_update_file}" /var/spool/cron/root
       else
-          #        sed -i "/acme.sh/c 0 3 * * 0 \"/root/.acme.sh\"/acme.sh --cron --home \"/root/.acme.sh\" \
-          #        &> /dev/null" /var/spool/cron/crontabs/root
           sed -i "/acme.sh/c 0 3 * * 0 bash ${ssl_update_file}" /var/spool/cron/crontabs/root
       fi
     fi
