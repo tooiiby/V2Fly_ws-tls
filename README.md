@@ -14,7 +14,7 @@ V2ray官方说明，了解 TLS WebSocket 及 V2ray 相关信息
 安装好 wget
 
 安装/更新方式
-Vmess+websocket+TLS+Nginx+Website
+Vless+websocket+TLS+Nginx+Website
 
 wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.com/tooiiby/V2Ray_ws-tls/main/install.sh" && chmod +x install.sh && bash install.sh
 
