@@ -1,9 +1,9 @@
 {
   "log": {
-        "access": "/var/log/v2ray/access.log",
-        "error": "/var/log/v2ray/error.log",
-        "loglevel": "warning"
-    },
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "loglevel": "warning"
+  },
   "inbounds": [
     {
       "port": 10086, 
@@ -16,7 +16,8 @@
             "id": "3f3effce-2640-4f29-b95b-a2106df6d96d", 
             "alterId": 0
           }
-        ]
+        ],
+	"decryption": "none"      
       }, 
       "streamSettings": {
         "network": "ws", 
@@ -29,23 +30,23 @@
   "outbounds": [
     {
       "protocol": "freedom", 
-      "settings": { }, 
+      "settings": {}, 
       "tag": "direct"
     }, 
     {
       "protocol": "blackhole", 
-      "settings": { }, 
+      "settings": {}, 
       "tag": "blocked"
     }
   ], 
   "dns": {
     "servers": [
       "https+local://1.1.1.1/dns-query",
-	  "1.1.1.1",
-	  "1.0.0.1",
-	  "8.8.8.8",
-	  "8.8.4.4",
-	  "localhost"
+        "1.1.1.1",
+        "1.0.0.1",
+        "8.8.8.8",
+        "8.8.4.4",
+        "localhost"
     ]
   },
   "routing": {
