@@ -1,4 +1,4 @@
-V2Ray 基于 Nginx 的 vmess+ws+tls 一键安装脚本
+V2Ray 基于 Nginx 的 vless+ws+tls 一键安装脚本
 
 感谢wulabing的脚本
 
