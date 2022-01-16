@@ -424,7 +424,7 @@ ssl_install() {
     judge "安装 SSL 证书生成脚本"
 }
 domain_check() {
-    read -rp "请输入你的域名信息(eg:www.google.com):" domain
+    read -rp "请输入你的域名信息(eg:www.abc.com):" domain
     domain_ip=$(ping "${domain}" -c 1 | sed '1{s/[^(]*(//;s/).*//;q}')
     echo -e "${OK} ${GreenBG} 正在获取 公网ip 信息，请耐心等待 ${Font}"
     local_ip=$(curl https://api-ipv4.ip.sb/ip)
@@ -557,7 +557,7 @@ nginx_conf_add() {
         listen 80;
         listen [::]:80;
         server_name serveraddr.com;
-        return 301 https://use.shadowsocksr.win\$request_uri;
+        return 301 https://www.serveraddr.com\$request_uri;
     }
 EOF
 
@@ -813,9 +813,8 @@ install_v2ray_ws_tls() {
     web_camouflage
     ssl_judge_and_install
     nginx_systemd
-    vmess_qr_config_tls_ws
+    vless_qr_config_tls_ws
     basic_information
-    vmess_link_image_choice
     tls_type
     show_information
     start_process_systemd
