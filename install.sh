@@ -9,8 +9,8 @@ cd "$(
 #====================================================
 #	System Request:Debian 9+/Ubuntu 18.04+/Centos 7+
 #	Author:	tooiiby
-#	Dscription: V2ray ws+tls
-#	Official document: www.v2ray.com
+#	Dscription: V2Fly ws+tls
+#	Official document: www.v2fly.org
 #====================================================
 
 #fonts color
