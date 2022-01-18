@@ -376,6 +376,7 @@ nginx_install() {
         --with-http_gzip_static_module \
         --with-http_stub_status_module \
         --with-pcre \
+        --with-stream \
         --with-http_realip_module \
         --with-http_flv_module \
         --with-http_mp4_module \
@@ -587,9 +588,9 @@ acme_cron_update() {
     wget -N -P /usr/bin --no-check-certificate "https://raw.githubusercontent.com/tooiiby/V2Ray_ws-tls/main/ssl_update.sh"
     if [[ $(crontab -l | grep -c "ssl_update.sh") -lt 1 ]]; then
       if [[ "${ID}" == "centos" ]]; then
-          sed -i "/acme.sh/c 0 3 * * 0 bash ${ssl_update_file}" /var/spool/cron/root
+          sed -i "/acme.sh/c 0 6 * * 0 bash ${ssl_update_file}" /var/spool/cron/root
       else
-          sed -i "/acme.sh/c 0 3 * * 0 bash ${ssl_update_file}" /var/spool/cron/crontabs/root
+          sed -i "/acme.sh/c 0 6 * * 0 bash ${ssl_update_file}" /var/spool/cron/crontabs/root
       fi
     fi
     judge "cron 计划任务更新"
