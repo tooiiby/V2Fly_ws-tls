@@ -330,10 +330,6 @@ nginx_exist_check() {
     fi
 }
 nginx_install() {
-    #    if [[ -d "/etc/nginx" ]];then
-    #        rm -rf /etc/nginx
-    #    fi
-
     wget -nc --no-check-certificate http://nginx.org/download/nginx-${nginx_version}.tar.gz -P ${nginx_openssl_src}
     judge "Nginx 下载"
     wget -nc --no-check-certificate https://www.openssl.org/source/openssl-${openssl_version}.tar.gz -P ${nginx_openssl_src}
