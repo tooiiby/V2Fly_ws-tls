@@ -1,4 +1,4 @@
-V2Ray 基于 Nginx 的 vless+ws+tls 一键安装脚本
+V2Fly 基于 Nginx 的 vless+ws+tls 一键安装脚本
 
 感谢wulabing的脚本
 
@@ -24,7 +24,7 @@ wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.c
 使用本脚本需要你拥有 Linux 基础及使用经验，了解计算机网络部分知识，计算机基础操作
 目前支持Debian 9+ / Ubuntu 18.04+ / Centos7+ ，部分Centos模板可能存在难以处理的编译问题，建议遇到编译问题时，请更换至其他系统模板
 群主仅提供极其有限的支持，如有问题可以询问群友
-每周日的凌晨3点，Nginx 会自动重启以配合证书的签发定时任务进行，在此期间，节点无法正常连接，预计持续时间为若干秒至两分钟
+每周日的早晨6点，Nginx 会自动重启以配合证书的签发定时任务进行，在此期间，节点无法正常连接，预计持续时间为若干秒至两分钟
 
 查看客户端配置
 cat ~/v2ray_info.txt
