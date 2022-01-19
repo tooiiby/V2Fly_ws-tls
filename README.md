@@ -63,7 +63,7 @@ Centos 系统用户请预先在防火墙中放行程序相关端口（默认：8
 
 Web 目录：/home/wwwroot/catch-the-cat
 
-V2ray 服务端配置：/etc/v2ray/config.json
+V2ray 服务端配置：/usr/local/etc/v2rayconfig.json
 
 V2ray 客户端配置: ~/v2ray_info.inf
 
