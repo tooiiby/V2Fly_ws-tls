@@ -703,7 +703,7 @@ tls_type() {
         systemctl restart nginx
         judge "Nginx 重启"
     else
-        echo -e "${Error} ${RedBG} Nginx 或 配置文件不存在 或当前安装版本为 h2 ，请正确安装脚本后执行${Font}"
+        echo -e "${Error} ${RedBG} Nginx 或 配置文件不存在，请正确安装脚本后执行${Font}"
     fi
 }
 show_access_log() {
