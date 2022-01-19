@@ -27,7 +27,7 @@ wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.c
 每周日的早晨6点，Nginx 会自动重启以配合证书的签发定时任务进行，在此期间，节点无法正常连接，预计持续时间为若干秒至两分钟
 
 查看客户端配置
-cat ~/v2ray_info.txt
+cat ~/v2ray_info.inf
 
 V2ray 简介
 
