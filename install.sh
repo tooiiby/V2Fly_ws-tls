@@ -559,8 +559,8 @@ start_process_systemd() {
     systemctl restart nginx
     judge "Nginx 启动"
     chown -R root.root /var/log/v2ray/
-    systemctl daemon-reload
     sed -i "s/User=nobody/User=root/;" /etc/systemd/system/v2ray.service
+    systemctl daemon-reload
     systemctl restart v2ray
     judge "V2ray 启动"
 }
