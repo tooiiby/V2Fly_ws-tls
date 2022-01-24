@@ -1,6 +1,6 @@
 V2Fly 基于 Nginx 的 vless+ws+tls 一键安装脚本
 
-感谢wulabing的脚本
+感谢wulabing的脚本https://github.com/wulabing/V2Ray_ws-tls_bash_onekey
 
 关于 VMess MD5 认证信息 淘汰机制
 自 2022 年 1 月 1 日起，服务器端将默认禁用对于 MD5 认证信息 的兼容。任何使用 MD5 认证信息的客户端将无法连接到禁用 VMess MD5 认证信息的服务器端。
