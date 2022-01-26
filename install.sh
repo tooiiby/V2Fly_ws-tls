@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.0.0"
+shell_version="1.0.1"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
