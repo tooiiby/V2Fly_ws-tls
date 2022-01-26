@@ -481,7 +481,7 @@ decompression() {
 
 install_file() {
   NAME="$1"
-  if [[ "$NAME" == 'v2ray' ]]; then
+  if [[ "$NAME" == 'v2ray' ]] || [[ "$NAME" == 'v2ctl' ]]; then
     install -m 755 "${TMP_DIRECTORY}/$NAME" "/usr/local/bin/$NAME"
   elif [[ "$NAME" == 'geoip.dat' ]] || [[ "$NAME" == 'geosite.dat' ]]; then
     install -m 644 "${TMP_DIRECTORY}/$NAME" "${DAT_PATH}/$NAME"
@@ -491,6 +491,7 @@ install_file() {
 install_v2ray() {
   # Install v2ray binary to /usr/local/bin/ and $DAT_PATH
   install_file v2ray
+  install_file v2ctl
   # If the file exists, geoip.dat and geosite.dat will not be installed or updated
   if [[ "$NO_GEODATA" -eq '0' ]] && [[ ! -f "${DAT_PATH}/.undat" ]]; then
     install -d "$DAT_PATH"
@@ -702,7 +703,7 @@ remove_v2ray() {
     if [[ -n "$(pidof v2ray)" ]]; then
       stop_v2ray
     fi
-    local delete_files=('/usr/local/bin/v2ray' '/etc/systemd/system/v2ray.service' '/etc/systemd/system/v2ray@.service' '/etc/systemd/system/v2ray.service.d' '/etc/systemd/system/v2ray@.service.d')
+    local delete_files=('/usr/local/bin/v2ray' '/usr/local/bin/v2ctl' '/etc/systemd/system/v2ray.service' '/etc/systemd/system/v2ray@.service' '/etc/systemd/system/v2ray.service.d' '/etc/systemd/system/v2ray@.service.d')
     [[ -d "$DAT_PATH" ]] && delete_files+=("$DAT_PATH")
     if [[ "$PURGE" -eq '1' ]]; then
       if [[ -z "$JSONS_PATH" ]]; then
@@ -855,6 +856,7 @@ main() {
   install_v2ray
   ([[ "$N_UP_SERVICE" -eq '1' ]] && [[ -f '/etc/systemd/system/v2ray.service' ]]) || install_startup_service_file
   echo 'installed: /usr/local/bin/v2ray'
+  echo 'installed: /usr/local/bin/v2ctl'
   # If the file exists, the content output of installing or updating geoip.dat and geosite.dat will not be displayed
   if [[ "$GEODATA" -eq '1' ]]; then
     echo "installed: ${DAT_PATH}/geoip.dat"
