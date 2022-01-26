@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.0.2"
+shell_version="1.0.3"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -320,7 +320,7 @@ v2ray_install() {
     if [[ -f v2ray.sh ]]; then
         rm -rf $v2ray_systemd_file
         systemctl daemon-reload
-        bash v2ray.sh --force
+        bash -c v2ray.sh --install -u root
         judge "安装 V2ray"
     else
         echo -e "${Error} ${RedBG} V2ray 安装文件下载失败，请检查下载地址是否可用 ${Font}"
@@ -575,9 +575,6 @@ EOF
 start_process_systemd() {
     systemctl restart nginx
     judge "Nginx 启动"
-    chown -R root.root /var/log/v2ray/
-    sed -i "s/User=nobody/User=root/;" /etc/systemd/system/v2ray.service
-    systemctl daemon-reload
     systemctl restart v2ray
     judge "V2ray 启动"
 }
@@ -912,11 +909,11 @@ menu() {
         install_v2ray_ws_tls
         ;;
     2)
-        bash <(curl -L -s https://raw.githubusercontent.com/tooiiby/V2Fly_ws-tls/${github_branch}/v2ray.sh)
+        bash -c "$(curl -L https://raw.githubusercontent.com/tooiiby/V2Fly_ws-tls/${github_branch}/v2ray.sh)" - install
         start_process_systemd
         ;;
     3)
-        bash <(curl -L -s https://raw.githubusercontent.com/tooiiby/V2Fly_ws-tls/${github_branch}/v2ray.sh) --beta
+        bash -c "$(curl -L https://raw.githubusercontent.com/tooiiby/V2Fly_ws-tls/${github_branch}/v2ray.sh)" - install --beta
         start_process_systemd
         ;;
     4)
