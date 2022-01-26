@@ -320,7 +320,7 @@ v2ray_install() {
     if [[ -f v2ray.sh ]]; then
         rm -rf $v2ray_systemd_file
         systemctl daemon-reload
-        bash -c v2ray.sh --install -u root
+        bash v2ray.sh -u root
         judge "安装 V2ray"
     else
         echo -e "${Error} ${RedBG} V2ray 安装文件下载失败，请检查下载地址是否可用 ${Font}"
