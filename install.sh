@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.0.1"
+shell_version="1.0.2"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -913,10 +913,11 @@ menu() {
         ;;
     2)
         bash <(curl -L -s https://raw.githubusercontent.com/tooiiby/V2Fly_ws-tls/${github_branch}/v2ray.sh)
+        start_process_systemd
         ;;
     3)
         bash <(curl -L -s https://raw.githubusercontent.com/tooiiby/V2Fly_ws-tls/${github_branch}/v2ray.sh) --beta
-        restart_all
+        start_process_systemd
         ;;
     4)
         read -rp "请输入UUID:" UUID
@@ -943,7 +944,6 @@ menu() {
         modify_camouflage_path
         start_process_systemd
         ;;
-    *)
     9)
         show_access_log
         ;;
@@ -974,6 +974,7 @@ menu() {
     17)
         exit 0
         ;;
+    *)
         echo -e "${RedBG}请输入正确的数字${Font}"
         ;;
     esac
