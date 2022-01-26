@@ -229,7 +229,6 @@ basic_optimization() {
         sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
         setenforce 0
     fi
-
 }
 
 port_alterid_set() {
