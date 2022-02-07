@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.0.8"
+shell_version="1.0.9"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -234,7 +234,7 @@ modify_UUID() {
     fi
     sed -i "/\"id\"/c \\\t  \"id\":\"${UUID}\"" ${v2ray_conf}
     judge "V2ray UUID 修改"
-    [ -f ${v2ray_qr_config_file} ] && sed -i "/\"id\"/c \\  \"id\": \"${UUID}\"" ${v2ray_qr_config_file}
+    [ -f ${v2ray_qr_config_file} ] && sed -i "/\"id\"/c \\  \"id\": \"${UUID}\"," ${v2ray_qr_config_file}
     echo -e "${OK} ${GreenBG} UUID:${UUID} ${Font}"
 }
 
@@ -817,10 +817,13 @@ list() {
 
 modify_camouflage_path() {
     [[ -z ${camouflage_path} ]] && camouflage_path=1
-    sed -i "/location/c \\\tlocation \/${camouflage_path}\/" ${nginx_conf}          #Modify the camouflage path of the nginx configuration file
-    sed -i "/\"path\"/c \\\t  \"path\":\"\/${camouflage_path}\/\"" ${v2ray_conf}    #Modify the camouflage path of the v2ray configuration file
-    judge "V2ray camouflage path modified"
-    [ -f ${v2ray_qr_config_file} ] && sed -i "/\"path\"/c \\\t  \"path\": \"\/${camouflage_path}\/\"" ${v2ray_qr_config_file}
+    # 修改nginx配置文件的伪装路径
+    sed -i "/location/c \\\tlocation \/${camouflage_path}\/" ${nginx_conf}
+    # 修改v2ray配置文件的伪装路径
+    sed -i "/\"path\"/c \\\t  \"path\":\"\/${camouflage_path}\/\"" ${v2ray_conf}
+    judge "V2ray 伪装路径 修改"
+    [ -f ${v2ray_qr_config_file} ] && sed -i "/\"path\"/c \\\t  \"path\": \"\/${camouflage_path}\/\"," ${v2ray_qr_config_file}
+    echo -e "${OK} ${GreenBG} path:${camouflage_path} ${Font}"
 }
 
 menu() {
