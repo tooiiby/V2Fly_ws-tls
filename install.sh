@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.1.2"
+shell_version="1.1.3"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -838,7 +838,7 @@ menu() {
     echo -e "${Green}1.${Font}  安装 V2Ray (Nginx+ws+tls)"
     echo -e "${Green}2.${Font}  升级 V2Ray core"
     echo -e "${Green}3.${Font}  安装 V2Ray core 测试版 (Pre)"
-    echo -e "${Green}4.${Font}  卸载 V2Ray"
+    echo -e "${Green}4.${Font}  卸载 V2Ray core !!!"
     echo -e "—————————————— 配置变更 ——————————————"
     echo -e "${Green}5.${Font}  变更 UUID"
     echo -e "${Green}6.${Font}  变更 port"
