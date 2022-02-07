@@ -59,6 +59,7 @@ old_config_status="off"
 
 #简易随机数
 random_num=$((RANDOM%12+4))
+
 #生成伪装路径
 camouflage="/$(head -n 10 /dev/urandom | md5sum | head -c ${random_num})/"
 
