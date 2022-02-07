@@ -10,4 +10,4 @@ sleep 1
 "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /dev/null
 "/root/.acme.sh"/acme.sh --installcert -d ${domain} --fullchainpath /data/v2ray.crt --keypath /data/v2ray.key --ecc
 sleep 1
-systemctl start nginx &> /dev/
+systemctl start nginx &> /dev/null
