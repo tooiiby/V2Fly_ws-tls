@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.0.9"
+shell_version="1.1.0"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -823,7 +823,7 @@ modify_camouflage_path() {
     sed -i "/\"path\"/c \\\t  \"path\":\"\/${camouflage_path}\/\"" ${v2ray_conf}
     judge "V2ray 伪装路径 修改"
     [ -f ${v2ray_qr_config_file} ] && sed -i "/\"path\"/c \\\t  \"path\": \"\/${camouflage_path}\/\"," ${v2ray_qr_config_file}
-    echo -e "${OK} ${GreenBG} path:${camouflage_path} ${Font}"
+    echo -e "${OK} ${GreenBG} 伪装路径:/${camouflage_path}/ ${Font}"
 }
 
 menu() {
