@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.0.3"
+shell_version="1.0.4"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -100,6 +100,10 @@ check_system() {
     systemctl stop ufw
     systemctl disable ufw
     echo -e "${OK} ${GreenBG} ufw 已关闭 ${Font}"
+    
+    systemctl stop nftables
+    systemctl disable nftables
+    echo -e "${OK} ${GreenBG} nftables 已关闭 ${Font}"
 }
 
 is_root() {
@@ -120,42 +124,6 @@ judge() {
         echo -e "${Error} ${RedBG} $1 失败${Font}"
         exit 1
     fi
-}
-
-chrony_install() {
-    ${INS} -y install chrony
-    judge "安装 chrony 时间同步服务 "
-
-    timedatectl set-ntp true
-
-    if [[ "${ID}" == "centos" ]]; then
-        systemctl enable chronyd && systemctl restart chronyd
-    else
-        systemctl enable chrony && systemctl restart chrony
-    fi
-
-    judge "chronyd 启动 "
-
-    timedatectl set-timezone Asia/Shanghai
-
-    echo -e "${OK} ${GreenBG} 等待时间同步 ${Font}"
-    sleep 10
-
-    chronyc sourcestats -v
-    chronyc tracking -v
-    date
-    read -rp "请确认时间是否准确,误差范围±3分钟(Y/N): " chrony_install
-    [[ -z ${chrony_install} ]] && chrony_install="Y"
-    case $chrony_install in
-    [yY][eE][sS] | [yY])
-        echo -e "${GreenBG} 继续安装 ${Font}"
-        sleep 2
-        ;;
-    *)
-        echo -e "${RedBG} 安装终止 ${Font}"
-        exit 2
-        ;;
-    esac
 }
 
 dependency_install() {
@@ -189,6 +157,9 @@ dependency_install() {
 
     ${INS} -y install curl
     judge "安装 curl"
+    
+    ${INS} -y install systemd
+    judge "安装/升级 systemd"
 
     if [[ "${ID}" == "centos" ]]; then
         ${INS} -y groupinstall "Development tools"
@@ -235,8 +206,6 @@ port_alterid_set() {
     if [[ "on" != "$old_config_status" ]]; then
         read -rp "请输入连接端口（default:443）:" port
         [[ -z ${port} ]] && port="443"
-        read -rp "请输入alterID（default:0 仅允许填数字）:" alterID
-        [[ -z ${alterID} ]] && alterID="0"
     fi
 }
 
@@ -246,16 +215,6 @@ modify_path() {
     fi
     sed -i "/\"path\"/c \\\t  \"path\":\"${camouflage}\"" ${v2ray_conf}
     judge "V2ray 伪装路径 修改"
-}
-
-modify_alterid() {
-    if [[ "on" == "$old_config_status" ]]; then
-        alterID="$(grep '\"aid\"' $v2ray_qr_config_file | awk -F '"' '{print $4}')"
-    fi
-    sed -i "/\"alterId\"/c \\\t  \"alterId\":${alterID}" ${v2ray_conf}
-    judge "V2ray alterid 修改"
-    [ -f ${v2ray_qr_config_file} ] && sed -i "/\"aid\"/c \\  \"aid\": \"${alterID}\"," ${v2ray_qr_config_file}
-    echo -e "${OK} ${GreenBG} alterID:${alterID} ${Font}"
 }
 
 modify_inbound_port() {
@@ -499,7 +458,6 @@ v2ray_conf_add_tls() {
     cd /usr/local/etc/v2ray || exit
     wget --no-check-certificate https://raw.githubusercontent.com/tooiiby/V2Fly_ws-tls/${github_branch}/config.json -O config.json
     modify_path
-    modify_alterid
     modify_inbound_port
     modify_UUID
 }
@@ -611,11 +569,9 @@ vless_qr_config_tls_ws() {
     cat >$v2ray_qr_config_file <<-EOF
 {
   "v": "2",
-  "ps": "hello_${domain}",
   "add": "${domain}",
   "port": "${port}",
   "id": "${UUID}",
-  "aid": "${alterID}",
   "net": "ws",
   "type": "none",
   "host": "${domain}",
@@ -631,13 +587,11 @@ info_extraction() {
 
 basic_information() {
     {
-        echo -e "${OK} ${GreenBG} V2ray+ws+tls 安装成功"
         echo -e "${Red} V2ray 配置信息 ${Font}"
         echo -e "${Red} 地址（address）:${Font} $(info_extraction '\"add\"') "
         echo -e "${Red} 端口（port）：${Font} $(info_extraction '\"port\"') "
         echo -e "${Red} 用户id（UUID）：${Font} $(info_extraction '\"id\"')"
-        echo -e "${Red} 额外id（alterId）：${Font} $(info_extraction '\"aid\"')"
-        echo -e "${Red} 加密方式（security）：${Font} 自适应 "
+        echo -e "${Red} 加密方式（security）：${Font} none "
         echo -e "${Red} 传输协议（network）：${Font} $(info_extraction '\"net\"') "
         echo -e "${Red} 伪装类型（type）：${Font} none "
         echo -e "${Red} 路径（不要落下/）：${Font} $(info_extraction '\"path\"') "
@@ -796,7 +750,6 @@ judge_mode() {
 install_v2ray_ws_tls() {
     is_root
     check_system
-    chrony_install
     dependency_install
     basic_optimization
     domain_check
