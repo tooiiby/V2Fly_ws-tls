@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.0.5"
+shell_version="1.0.6"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -232,7 +232,7 @@ modify_UUID() {
     if [[ "on" == "$old_config_status" ]]; then
         UUID="$(info_extraction '\"id\"')"
     fi
-    sed -i "/\"id\"/c \\\t  \"id\":\"${UUID}\"," ${v2ray_conf}
+    sed -i "/\"id\"/c \\\t  \"id\":\"${UUID}\"" ${v2ray_conf}
     judge "V2ray UUID 修改"
     [ -f ${v2ray_qr_config_file} ] && sed -i "/\"id\"/c \\  \"id\": \"${UUID}\"," ${v2ray_qr_config_file}
     echo -e "${OK} ${GreenBG} UUID:${UUID} ${Font}"
