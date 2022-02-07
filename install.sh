@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.1.0"
+shell_version="1.1.1"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -899,6 +899,7 @@ menu() {
         show_error_log
         ;;
     10)
+        basic_information
         show_information
         ;;
     11)
