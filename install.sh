@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.1.1"
+shell_version="1.1.2"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -822,7 +822,7 @@ modify_camouflage_path() {
     # 修改v2ray配置文件的伪装路径
     sed -i "/\"path\"/c \\\t  \"path\":\"\/${camouflage_path}\/\"" ${v2ray_conf}
     judge "V2ray 伪装路径 修改"
-    [ -f ${v2ray_qr_config_file} ] && sed -i "/\"path\"/c \\\t  \"path\": \"\/${camouflage_path}\/\"," ${v2ray_qr_config_file}
+    [ -f ${v2ray_qr_config_file} ] && sed -i "/\"path\"/c \\  \"path\": \"\/${camouflage_path}\/\"," ${v2ray_qr_config_file}
     echo -e "${OK} ${GreenBG} 伪装路径:/${camouflage_path}/ ${Font}"
 }
 
@@ -838,17 +838,17 @@ menu() {
     echo -e "${Green}1.${Font}  安装 V2Ray (Nginx+ws+tls)"
     echo -e "${Green}2.${Font}  升级 V2Ray core"
     echo -e "${Green}3.${Font}  安装 V2Ray core 测试版 (Pre)"
+    echo -e "${Green}4.${Font}  卸载 V2Ray"
     echo -e "—————————————— 配置变更 ——————————————"
-    echo -e "${Green}4.${Font}  变更 UUID"
-    echo -e "${Green}5.${Font}  变更 port"
-    echo -e "${Green}6.${Font}  变更 TLS 版本(仅ws+tls有效)"
-    echo -e "${Green}7.${Font}  变更伪装路径"
+    echo -e "${Green}5.${Font}  变更 UUID"
+    echo -e "${Green}6.${Font}  变更 port"
+    echo -e "${Green}7.${Font}  变更 TLS 版本(仅ws+tls有效)"
+    echo -e "${Green}8.${Font}  变更伪装路径"
     echo -e "—————————————— 查看信息 ——————————————"
-    echo -e "${Green}8.${Font}  查看 实时访问日志"
-    echo -e "${Green}9.${Font}  查看 实时错误日志"
-    echo -e "${Green}10.${Font} 查看 V2Ray 配置信息"
+    echo -e "${Green}9.${Font}  查看 实时访问日志"
+    echo -e "${Green}10.${Font} 查看 实时错误日志"
+    echo -e "${Green}11.${Font} 查看 V2Ray 配置信息"
     echo -e "—————————————— 其他选项 ——————————————"
-    echo -e "${Green}11.${Font} 卸载 V2Ray"
     echo -e "${Green}12.${Font} 安装 BBR 锐速安装脚本"
     echo -e "${Green}13.${Font} 证书 有效期更新"
     echo -e "${Green}14.${Font} 更新 证书crontab计划任务"
@@ -873,38 +873,38 @@ menu() {
         start_process_systemd
         ;;
     4)
+        source '/etc/os-release'
+        uninstall_all
+        ;;
+    5)
         read -rp "请输入UUID:" UUID
         modify_UUID
         start_process_systemd
         ;;
-    5)
+    6)
         read -rp "请输入连接端口:" port
         if grep -q "ws" $v2ray_qr_config_file; then
             modify_nginx_port
         fi
         start_process_systemd
         ;;
-    6)
+    7)
         tls_type
         ;;
-    7)
+    8)
         read -rp "请输入伪装路径(注意！不需要加斜杠 eg:ray):" camouflage_path
         modify_camouflage_path
         start_process_systemd
         ;;
-    8)
+    9)
         show_access_log
         ;;
-    9)
+    10)
         show_error_log
         ;;
-    10)
+    11)
         basic_information
         show_information
-        ;;
-    11)
-        source '/etc/os-release'
-        uninstall_all
         ;;
     12)
         bbr_boost_sh
