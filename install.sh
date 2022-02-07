@@ -841,7 +841,7 @@ menu() {
     echo -e "${Green}4.${Font}  卸载 V2Ray core !!!"
     echo -e "—————————————— 配置变更 ——————————————"
     echo -e "${Green}5.${Font}  变更 UUID"
-    echo -e "${Green}6.${Font}  变更 port"
+    echo -e "${Green}6.${Font}  变更 Port"
     echo -e "${Green}7.${Font}  变更 TLS 版本(仅ws+tls有效)"
     echo -e "${Green}8.${Font}  变更伪装路径"
     echo -e "—————————————— 查看信息 ——————————————"
@@ -851,7 +851,7 @@ menu() {
     echo -e "—————————————— 其他选项 ——————————————"
     echo -e "${Green}12.${Font} 安装 BBR 锐速安装脚本"
     echo -e "${Green}13.${Font} 证书 有效期更新"
-    echo -e "${Green}14.${Font} 更新 证书crontab计划任务"
+    echo -e "${Green}14.${Font} 更新 证书Crontab计划任务"
     echo -e "${Green}15.${Font} 清空 证书遗留文件"
     echo -e "${Green}16.${Font} 退出 \n"
 
