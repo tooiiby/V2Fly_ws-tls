@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.0.4"
+shell_version="1.0.5"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -836,21 +836,20 @@ menu() {
     echo -e "${Green}3.${Font}  安装 V2Ray core 测试版 (Pre)"
     echo -e "—————————————— 配置变更 ——————————————"
     echo -e "${Green}4.${Font}  变更 UUID"
-    echo -e "${Green}5.${Font}  变更 alterid"
-    echo -e "${Green}6.${Font}  变更 port"
-    echo -e "${Green}7.${Font}  变更 TLS 版本(仅ws+tls有效)"
-    echo -e "${Green}8.${Font}  变更伪装路径"
+    echo -e "${Green}5.${Font}  变更 port"
+    echo -e "${Green}6.${Font}  变更 TLS 版本(仅ws+tls有效)"
+    echo -e "${Green}7.${Font}  变更伪装路径"
     echo -e "—————————————— 查看信息 ——————————————"
-    echo -e "${Green}9.${Font}  查看 实时访问日志"
-    echo -e "${Green}10.${Font} 查看 实时错误日志"
-    echo -e "${Green}11.${Font} 查看 V2Ray 配置信息"
+    echo -e "${Green}8.${Font}  查看 实时访问日志"
+    echo -e "${Green}9.${Font}  查看 实时错误日志"
+    echo -e "${Green}10.${Font} 查看 V2Ray 配置信息"
     echo -e "—————————————— 其他选项 ——————————————"
-    echo -e "${Green}12.${Font} 卸载 V2Ray"
-    echo -e "${Green}13.${Font} 安装 BBR 锐速安装脚本"
-    echo -e "${Green}14.${Font} 证书 有效期更新"
-    echo -e "${Green}15.${Font} 更新 证书crontab计划任务"
-    echo -e "${Green}16.${Font} 清空 证书遗留文件"
-    echo -e "${Green}17.${Font} 退出 \n"
+    echo -e "${Green}11.${Font} 卸载 V2Ray"
+    echo -e "${Green}12.${Font} 安装 BBR 锐速安装脚本"
+    echo -e "${Green}13.${Font} 证书 有效期更新"
+    echo -e "${Green}14.${Font} 更新 证书crontab计划任务"
+    echo -e "${Green}15.${Font} 清空 证书遗留文件"
+    echo -e "${Green}16.${Font} 退出 \n"
 
     read -rp "请输入数字：" menu_num
     case $menu_num in
@@ -875,53 +874,48 @@ menu() {
         start_process_systemd
         ;;
     5)
-        read -rp "请输入alterID:" alterID
-        modify_alterid
-        start_process_systemd
-        ;;
-    6)
         read -rp "请输入连接端口:" port
         if grep -q "ws" $v2ray_qr_config_file; then
             modify_nginx_port
         fi
         start_process_systemd
         ;;
-    7)
+    6)
         tls_type
         ;;
-    8)
+    7)
         read -rp "请输入伪装路径(注意！不需要加斜杠 eg:ray):" camouflage_path
         modify_camouflage_path
         start_process_systemd
         ;;
-    9)
+    8)
         show_access_log
         ;;
-    10)
+    9)
         show_error_log
         ;;
-    11)
+    10)
         show_information
         ;;
-    12)
+    11)
         source '/etc/os-release'
         uninstall_all
         ;;
-    13)
+    12)
         bbr_boost_sh
         ;;
-    14)
+    13)
         stop_process_systemd
         ssl_update_manuel
         start_process_systemd
         ;;
-    15)
+    14)
         acme_cron_update
         ;;
-    16)
+    15)
         delete_tls_key_and_crt
         ;;
-    17)
+    16)
         exit 0
         ;;
     *)
