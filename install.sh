@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.1.7"
+shell_version="1.1.8"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -587,7 +587,7 @@ info_extraction() {
 
 basic_information() {
     {
-        echo -e "${Red} V2ray 配置信息 ${Font}"
+        echo -e "${Red} V2ray 配置信息 ${Font} "
         echo -e "${Red} 地址（address）:${Font} $(info_extraction '\"add\"') "
         echo -e "${Red} 端口（port）：${Font} $(info_extraction '\"port\"') "
         echo -e "${Red} 用户id（UUID）：${Font} $(info_extraction '\"id\"') "
