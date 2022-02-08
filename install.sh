@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.1.5"
+shell_version="1.1.6"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -214,7 +214,7 @@ modify_path() {
     if [[ "on" == "$old_config_status" ]]; then
         camouflage="$(grep '\"path\"' $v2ray_qr_config_file | awk -F '"' '{print $4}')"
     fi
-    sed -i "/\"path\"/c \\  \"path\": \"${camouflage}\"" ${v2ray_conf}
+    sed -i "/\"path\"/c \\\t  \"path\": \"${camouflage}\"" ${v2ray_conf}
     judge "V2ray 伪装路径 修改"
 }
 
@@ -223,7 +223,7 @@ modify_inbound_port() {
         port="$(info_extraction '\"port\"')"
     fi
     PORT=$((RANDOM + 10000))
-    sed -i "/\"port\"/c \\  \"port\": ${PORT}," ${v2ray_conf}
+    sed -i "/\"port\"/c  \      \"port\": ${PORT}," ${v2ray_conf}
     judge "V2ray inbound_port 修改"
 }
 
@@ -232,7 +232,7 @@ modify_UUID() {
     if [[ "on" == "$old_config_status" ]]; then
         UUID="$(info_extraction '\"id\"')"
     fi
-    sed -i "/\"id\"/c \\  \"id\": \"${UUID}\"" ${v2ray_conf}
+    sed -i "/\"id\"/c \\\t  \"id\": \"${UUID}\"" ${v2ray_conf}
     judge "V2ray UUID 修改"
     [ -f ${v2ray_qr_config_file} ] && sed -i "/\"id\"/c \\  \"id\": \"${UUID}\"," ${v2ray_qr_config_file}
     echo -e "${OK} ${GreenBG} UUID:${UUID} ${Font}"
@@ -590,7 +590,7 @@ basic_information() {
         echo -e "${Red} V2ray 配置信息 ${Font}"
         echo -e "${Red} 地址（address）:${Font} $(info_extraction '\"add\"') "
         echo -e "${Red} 端口（port）：${Font} $(info_extraction '\"port\"') "
-        echo -e "${Red} 用户id（UUID）：${Font} $(info_extraction '\"id\"')"
+        echo -e "${Red} 用户id（UUID）：${Font} $(info_extraction '\"id\"') "
         echo -e "${Red} 加密方式（security）：${Font} none "
         echo -e "${Red} 传输协议（network）：${Font} $(info_extraction '\"net\"') "
         echo -e "${Red} 伪装类型（type）：${Font} none "
@@ -820,7 +820,7 @@ modify_camouflage_path() {
     # 修改nginx配置文件的伪装路径
     sed -i "/location/c \\\tlocation \/${camouflage_path}\/" ${nginx_conf}
     # 修改v2ray配置文件的伪装路径
-    sed -i "/\"path\"/c \\  \"path\": \"\/${camouflage_path}\/\"" ${v2ray_conf}
+    sed -i "/\"path\"/c \\\t  \"path\": \"\/${camouflage_path}\/\"" ${v2ray_conf}
     judge "V2ray 伪装路径 修改"
     [ -f ${v2ray_qr_config_file} ] && sed -i "/\"path\"/c \\  \"path\": \"\/${camouflage_path}\/\"," ${v2ray_qr_config_file}
     echo -e "${OK} ${GreenBG} 伪装路径:/${camouflage_path}/ ${Font}"
