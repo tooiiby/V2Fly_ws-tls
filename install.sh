@@ -522,7 +522,7 @@ nginx_conf_add() {
         listen [::]:80;
         server_name serveraddr.com;
         return 301 https://serveraddr.com\$request_uri;
-    }
+}
 EOF
 
     modify_nginx_port
