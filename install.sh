@@ -27,7 +27,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.1.8"
+shell_version="1.1.9"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -50,7 +50,7 @@ v2ray_error_log="/var/log/v2ray/error.log"
 amce_sh_file="/root/.acme.sh/acme.sh"
 ssl_update_file="/usr/bin/ssl_update.sh"
 nginx_version="1.20.2"
-openssl_version="1.1.1m"
+openssl_version="1.1.1n"
 jemalloc_version="5.2.1"
 old_config_status="off"
 
