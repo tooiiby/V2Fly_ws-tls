@@ -29,9 +29,9 @@ JSON_PATH=${JSON_PATH:-/usr/local/etc/v2ray}
 # Gobal verbals
 
 if [[ -f '/etc/systemd/system/v2ray.service' ]] && [[ -f '/usr/local/bin/v2ray' ]]; then
-  v2ray_IS_INSTALLED_BEFORE_RUNNING_SCRIPT=1
+  V2RAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT=1
 else
-  v2ray_IS_INSTALLED_BEFORE_RUNNING_SCRIPT=0
+  V2RAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT=0
 fi
 
 # v2ray current version
