@@ -636,7 +636,7 @@ start_v2ray() {
 }
 
 stop_v2ray() {
-  v2ray_CUSTOMIZE="$(systemctl list-units | grep 'v2ray@' | awk -F ' ' '{print $1}')"
+  V2RAY_CUSTOMIZE="$(systemctl list-units | grep 'v2ray@' | awk -F ' ' '{print $1}')"
   if [[ -z "$v2ray_CUSTOMIZE" ]]; then
     local v2ray_daemon_to_stop='v2ray.service'
   else
@@ -667,7 +667,7 @@ install_geodata() {
   local file_site='geosite.dat'
   local dir_tmp
   dir_tmp="$(mktemp -d)"
-  [[ "$v2ray_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '0' ]] && echo "warning: v2ray was not installed"
+  [[ "$V2RAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '0' ]] && echo "warning: v2ray was not installed"
   download_geodata $download_link_geoip $file_ip
   download_geodata $download_link_geosite $file_dlc
   cd "${dir_tmp}" || exit
@@ -686,7 +686,7 @@ install_geodata() {
 }
 
 check_update() {
-  if [[ "$v2ray_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '1' ]]; then
+  if [[ "$V2RAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '1' ]]; then
     get_current_version
     echo "info: The current version of v2ray is $CURRENT_VERSION ."
   else
@@ -891,8 +891,8 @@ main() {
   get_current_version
   echo "info: v2ray $CURRENT_VERSION is installed."
   echo "You may need to execute a command to remove dependent software: $PACKAGE_MANAGEMENT_REMOVE curl unzip"
-  if [[ "$v2ray_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '1' ]] && [[ "$FORCE" -eq '0' ]] && [[ "$REINSTALL" -eq '0' ]]; then
-    [[ "$v2ray_RUNNING" -eq '1' ]] && start_v2ray
+  if [[ "$V2RAY_IS_INSTALLED_BEFORE_RUNNING_SCRIPT" -eq '1' ]] && [[ "$FORCE" -eq '0' ]] && [[ "$REINSTALL" -eq '0' ]]; then
+    [[ "$V2RAY_RUNNING" -eq '1' ]] && start_v2ray
   else
     systemctl start v2ray
     systemctl enable v2ray
