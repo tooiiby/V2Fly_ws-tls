@@ -543,7 +543,7 @@ install_startup_service_file() {
   fi
 cat > /etc/systemd/system/v2ray.service << EOF
 [Unit]
-Description=v2ray Service
+Description=V2ray Service
 Documentation=https://github.com/v2fly
 After=network.target nss-lookup.target
 
@@ -563,7 +563,7 @@ WantedBy=multi-user.target
 EOF
 cat > /etc/systemd/system/v2ray@.service <<EOF
 [Unit]
-Description=v2ray Service
+Description=V2ray Service
 Documentation=https://github.com/v2fly
 After=network.target nss-lookup.target
 
@@ -624,9 +624,9 @@ ExecStart=/usr/local/bin/v2ray -config ${JSON_PATH}/%i.json" > \
 
 start_v2ray() {
   if [[ -f '/etc/systemd/system/v2ray.service' ]]; then
-    systemctl start "${v2ray_CUSTOMIZE:-v2ray}"
+    systemctl start "${V2RAY_CUSTOMIZE:-v2ray}"
     sleep 1s
-    if systemctl -q is-active "${v2ray_CUSTOMIZE:-v2ray}"; then
+    if systemctl -q is-active "${V2RAY_CUSTOMIZE:-v2ray}"; then
       echo 'info: Start the v2ray service.'
     else
       echo 'error: Failed to start v2ray service.'
@@ -637,10 +637,10 @@ start_v2ray() {
 
 stop_v2ray() {
   V2RAY_CUSTOMIZE="$(systemctl list-units | grep 'v2ray@' | awk -F ' ' '{print $1}')"
-  if [[ -z "$v2ray_CUSTOMIZE" ]]; then
+  if [[ -z "$V2RAY_CUSTOMIZE" ]]; then
     local v2ray_daemon_to_stop='v2ray.service'
   else
-    local v2ray_daemon_to_stop="$v2ray_CUSTOMIZE"
+    local v2ray_daemon_to_stop="$V2RAY_CUSTOMIZE"
   fi
   if ! systemctl stop "$v2ray_daemon_to_stop"; then
     echo 'error: Stopping the v2ray service failed.'
