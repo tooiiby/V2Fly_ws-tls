@@ -49,9 +49,9 @@ v2ray_access_log="/var/log/v2ray/access.log"
 v2ray_error_log="/var/log/v2ray/error.log"
 amce_sh_file="/root/.acme.sh/acme.sh"
 ssl_update_file="/usr/bin/ssl_update.sh"
-nginx_version="1.20.2"
-openssl_version="1.1.1n"
-jemalloc_version="5.2.1"
+nginx_version="1.22.0"
+openssl_version="1.1.1o"
+jemalloc_version="5.3.0"
 old_config_status="off"
 
 #移动旧版本配置信息 对小于 1.1.0 版本适配
