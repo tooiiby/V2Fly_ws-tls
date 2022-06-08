@@ -12,7 +12,7 @@ V2ray官方说明，了解 TLS WebSocket 及 V2ray 相关信息
 安装/更新方式
 Vless+websocket+TLS+Nginx+Website
 
-wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontent.com/tooiiby/V2Fly_ws-tls/main/install.sh" && chmod +x install.sh && bash install.sh
+wget -N --no-check-certificate -q -O install.sh "https://raw.githubusercontents.com/tooiiby/V2Fly_ws-tls/main/install.sh" && chmod +x install.sh && bash install.sh
 
 注意事项
 
