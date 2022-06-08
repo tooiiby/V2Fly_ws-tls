@@ -29,7 +29,7 @@ OK="${Green}[OK]${Font}"
 Error="${Red}[错误]${Font}"
 
 # 版本
-shell_version="1.1.9"
+shell_version="1.2.0"
 shell_mode="None"
 github_branch="main"
 version_cmp="/tmp/version_cmp.tmp"
@@ -389,7 +389,7 @@ ssl_install() {
 
 domain_check() {
     read -rp "请输入你的域名信息(eg:www.xxx.com):" domain
-    domain_ip=$(curl -sm8 https://ipget.net/?ip="${domain}")
+    domain_ip=$(curl -sm8 https://api64.ipify.org/?ip="${domain}")
     echo -e "${OK} ${GreenBG} 正在获取 公网ip 信息，请耐心等待 ${Font}"
     wgcfv4_status=$(curl -s4m8 https://www.cloudflare.com/cdn-cgi/trace -k | grep warp | cut -d= -f2)
     wgcfv6_status=$(curl -s6m8 https://www.cloudflare.com/cdn-cgi/trace -k | grep warp | cut -d= -f2)
@@ -398,8 +398,8 @@ domain_check() {
         wg-quick down wgcf >/dev/null 2>&1
         echo -e "${OK} ${GreenBG} 已关闭 wgcf-warp ${Font}"
     fi
-    local_ipv4=$(curl -s4m8 https://ip.gs)
-    local_ipv6=$(curl -s6m8 https://ip.gs)
+    local_ipv4=$(curl -s4m8 https://api64.ipify.org)
+    local_ipv6=$(curl -s6m8 https://api64.ipify.org)
     if [[ -z ${local_ipv4} && -n ${local_ipv6} ]]; then
         echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
         echo -e "${OK} ${GreenBG} 识别为 IPv6 Only 的 VPS，自动添加 DNS64 服务器 ${Font}"
