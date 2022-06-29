@@ -52,7 +52,7 @@ v2ray_error_log="/var/log/v2ray/error.log"
 amce_sh_file="/root/.acme.sh/acme.sh"
 ssl_update_file="/usr/bin/ssl_update.sh"
 nginx_version="1.22.0"
-openssl_version="1.1.1o"
+openssl_version="1.1.1p"
 jemalloc_version="5.3.0"
 old_config_status="off"
 
