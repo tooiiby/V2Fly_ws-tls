@@ -557,7 +557,7 @@ User=$INSTALL_USER
 ${temp_CapabilityBoundingSet}
 ${temp_AmbientCapabilities}
 ${temp_NoNewPrivileges}
-ExecStart=/usr/local/bin/v2ray -config /usr/local/etc/v2ray/config.json
+ExecStart=/usr/local/bin/v2ray run -config /usr/local/etc/v2ray/config.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
@@ -577,7 +577,7 @@ User=$INSTALL_USER
 ${temp_CapabilityBoundingSet}
 ${temp_AmbientCapabilities}
 ${temp_NoNewPrivileges}
-ExecStart=/usr/local/bin/v2ray -config /usr/local/etc/v2ray/%i.json
+ExecStart=/usr/local/bin/v2ray run -config /usr/local/etc/v2ray/%i.json
 Restart=on-failure
 RestartPreventExitStatus=23
 LimitNPROC=10000
