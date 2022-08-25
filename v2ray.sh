@@ -151,6 +151,7 @@ identify_the_operating_system_and_architecture() {
         ;;
       'mips64')
         MACHINE='mips64'
+        lscpu | grep -q "Little Endian" && MACHINE='mips64le'
         ;;
       'mips64le')
         MACHINE='mips64le'
@@ -205,6 +206,10 @@ identify_the_operating_system_and_architecture() {
     elif [[ "$(type -P pacman)" ]]; then
       PACKAGE_MANAGEMENT_INSTALL='pacman -Syu --noconfirm'
       PACKAGE_MANAGEMENT_REMOVE='pacman -Rsn'
+      package_provide_tput='ncurses'
+     elif [[ "$(type -P emerge)" ]]; then
+      PACKAGE_MANAGEMENT_INSTALL='emerge -v'
+      PACKAGE_MANAGEMENT_REMOVE='emerge -Cv'
       package_provide_tput='ncurses'
     else
       echo "error: The script does not support the package manager in this operating system."
